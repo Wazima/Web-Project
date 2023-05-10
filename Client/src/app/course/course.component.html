@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" href="course.component.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <title>Welcome to  BrilliantPro</title>
+</head>
+<body>
+    <!-- Navbar (Signed in) -->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/adminDashboard">BrilliantPro</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mobile-nav">
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink='/adminDashboard' [state]="{ id:1 , name: token}">
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <img class="rounded-circle" style="width: 25px;margin-right:5px" src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
+                alt="" title="You must have a Gravatar connected to your email to display an image" /> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<h2 style="margin-left: 45%;">All Courses</h2>
+<div  class="container">
+    <table class="table table-hover" >
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Instructor</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let course of Courses">
+          <tr>
+            <td>{{course.id}}</td>
+            <td>{{course.name}}</td>
+            <td>{{course.instructor}}</td>
+            <td><button class="btn-danger" (click)="removeCourse(course.id)">
+                Remove Course
+              </button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<!-- CRUD Ops -->
+<div class="container">
+    <div style="margin-bottom: 30px;">
+        <button class="btn btn-primary" (click)="toggleform()">
+            Add Course
+          </button>
+    </div>
+    <div *ngIf="displayform" class="form" id="form">
+        <form method="post" class="form1">
+          <h2>Add Course</h2>
+          <label class="b">Course Title</label><br>
+          <input type="text" name="coursetitle" placeholder="Course Title" id="coursetitle" class="textbox" [(ngModel)]="title" required><br>
+          <label class="b">Course ID</label><br>
+          <input type="text" name="courseID" placeholder="Course ID" id="courseID" class="textbox" [(ngModel)]="ID" required><br>
+          <label class="b">Instructor</label><br>
+          <input type="text" name="Instructor" placeholder="Instructor" id="Instructor" class="textbox" [(ngModel)]="Instructor" required><br>
+          <label class="b">Difficulty</label><br>
+          <input id="date" name="diff" type="number" min="1" max="5" placeholder="Course Difficulty" id="diff" class="textbox" [(ngModel)]="Difficulty" required><br>
+          <label class="b">Duration</label><br>
+          <input type="text" name="Duration" placeholder="Duration(hrs)" id="Duration" class="textbox" [(ngModel)]="Duration" required><br>
+          <button class="btn" id="submitbtn" name="Submit" type="reset" (click)="addproj()">Submit</button>
+          <button type="button" class="cancel" (click)="toggleform()">Close</button>
+        </form>
+      </div>
+</div>
+
+</body>
+</html>

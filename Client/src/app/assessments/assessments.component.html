@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" href="assessments.component.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <title>Welcome to  BrilliantPro</title>
+</head>
+<body>
+     <!-- Navbar (Signed in) -->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/adminDashboard">BrilliantPro</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mobile-nav">
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink='/adminDashboard' [state]="{ id:1 , name: token}">
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <img class="rounded-circle" style="width: 25px;margin-right:5px" src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
+                alt="" title="You must have a Gravatar connected to your email to display an image" /> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    <h2 style="margin-left: 45%;">All Assessments</h2>
+    <div  class="container">
+        <table class="table table-hover" >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Marks</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let a of assessments">
+              <tr>
+                <td>{{a.id}}</td>
+                <td>{{a.totalMarks}}</td>
+                <td>{{a.timeLimitInMinutes}}</td>
+                <td><button class="btn-danger" (click)="removeAssessment(a.id)">
+                    Remove Assessment
+                  </button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    <div class="container">
+        <div>
+            <button class="btn btn-primary" (click)="toggleform1()">
+                Add Assessment
+              </button>
+        </div>
+        <div *ngIf="displayform1" class="form" id="form">
+            <form method="post" class="form1">
+              <h2>Add Assessment</h2>
+              <label class="b">ID</label><br>
+              <input type="text" name="aID" placeholder="ID" id="aID" class="textbox" [(ngModel)]="aID" required><br>
+              <label class="b">Name</label><br>
+              <input type="text" name="aname" placeholder="Name" id="aname" class="textbox" [(ngModel)]="aname" required><br>
+              <label class="b">Time Limit</label><br>
+              <input type="text" name="atime" placeholder="Time Limit" id="atime" class="textbox" [(ngModel)]="atime" required><br>
+              <label class="b">Total Marks</label><br>
+              <input type="text" name="amarks" placeholder="Total Marks" id="amarks" class="textbox" [(ngModel)]="amarks" required><br>
+              <button type="button" class="btn3" (click)="toggleform2()">Add Questions</button>
+        
+              <div *ngIf="displayqs">
+                <div class="questions" *ngFor="let qs of detail">
+                  <h2>Question: {{qs.statement}}</h2>
+                  <p>Option1: {{qs.option1}}</p>
+                  <p>Option2: {{qs.option2}}</p>
+                  <p>Option3: {{qs.option3}}</p>
+                  <p>Option4: {{qs.option4}}</p>
+                  <p><b>Correct Answer: {{qs.answer}}</b></p>
+                  <br>
+                </div>
+                </div>
+        
+              <button type="button" class="expand" (click)="toggleqs()">Show/hide Questions</button><br><br>
+        
+              <button class="btn" id="submitbtn" name="Submit" type="reset" (click)="addassessment()">Submit</button>
+              <button type="button" class="cancel" (click)="toggleform1()">Close</button>
+            </form>
+          </div>
+          <div *ngIf="displayform2" class="form" id="form">
+            <form method="post" class="form1">
+              <h2>Add Question</h2>
+              <label class="b">Course Title</label><br>
+              <textarea id="Question" class="textbox" name="Question" cols="57" rows="3" [(ngModel)]="statement" placeholder="Question statement"></textarea>
+              <label class="b">Options</label><br>
+              <input type="text" name="option1" placeholder="option1" id="option1" class="textbox" [(ngModel)]="option1" required><br>
+              <input type="text" name="option2" placeholder="option2" id="option2" class="textbox" [(ngModel)]="option2" required><br>
+              <input type="text" name="option3" placeholder="option3" id="option3" class="textbox" [(ngModel)]="option3" required><br>
+              <input type="text" name="option4" placeholder="option4" id="option4" class="textbox" [(ngModel)]="option4" required><br>
+              <label class="b">Correct Answer</label><br>
+              <input id="ans" name="ans" type="number" min="1" max="4" placeholder="Correct Answer" id="diff" class="textbox" [(ngModel)]="ans" required><br>
+              <button class="btn" id="submitbtn" name="Submit" type="reset" (click)="addquestion()">Submit</button>
+              <button type="button" class="cancel" (click)="toggleform2()">Close</button>
+            </form>
+        
+          </div>
+    </div>
+</body>
+
